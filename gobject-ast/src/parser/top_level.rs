@@ -398,6 +398,7 @@ impl Parser {
                             parameters,
                             export_macros,
                             macro_modifiers,
+                            macro_modifier_locations: self.collect_macro_modifier_locations(node),
                             location: self.node_location(node),
                             doc: FunctionDoc::from_node_for(node, source, name),
                         }));
@@ -567,6 +568,7 @@ impl Parser {
             is_inline,
             parameters,
             macro_modifiers,
+            macro_modifier_locations: self.collect_macro_modifier_locations(node),
             body_statements,
             location: self.node_location(node),
             body_location,
@@ -720,6 +722,7 @@ impl Parser {
                                 .map(|params| self.extract_parameters(params, source))
                                 .unwrap_or_default(),
                             macro_modifiers: self.collect_macro_modifiers(child, source),
+                            macro_modifier_locations: self.collect_macro_modifier_locations(child),
                         });
 
                     fields.push(StructField {
